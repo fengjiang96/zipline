@@ -117,8 +117,7 @@ class AssetFinder(object):
             self.asset_router.c.sid == int(sid),
         ).scalar()
 
-        if asset_type is not None:
-            self._asset_type_cache[sid] = asset_type
+        self._asset_type_cache[sid] = asset_type
         return asset_type
 
     def retrieve_asset(self, sid, default_none=False):
@@ -140,8 +139,7 @@ class AssetFinder(object):
                 asset = None
 
             # Cache the asset if it has been retrieved
-            if asset is not None:
-                self._asset_cache[sid] = asset
+            self._asset_cache[sid] = asset
 
         if (asset is not None) or default_none:
             return asset
