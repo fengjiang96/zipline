@@ -47,7 +47,7 @@ from zipline.errors import (
 from zipline.finance.trading import TradingEnvironment, noop_load
 from zipline.utils.test_utils import (
     all_subindices,
-    make_rotating_asset_info,
+    make_rotating_equity_info,
 )
 
 
@@ -735,7 +735,7 @@ class AssetFinderTestCase(TestCase):
         trading_day = self.env.trading_day
         first_start = pd.Timestamp('2015-04-01', tz='UTC')
 
-        frame = make_rotating_asset_info(
+        frame = make_rotating_equity_info(
             num_assets=num_assets,
             first_start=first_start,
             frequency=self.env.trading_day,
