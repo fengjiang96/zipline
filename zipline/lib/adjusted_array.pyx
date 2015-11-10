@@ -5,6 +5,8 @@ from cpython cimport (
     Py_EQ,
     PyObject_RichCompare,
 )
+from pprint import pformat
+
 from numpy import (
     asarray,
     bool_,
@@ -127,6 +129,12 @@ cdef class Float64AdjustedArray(AdjustedArray):
 
         self._data = data
         self.adjustments = adjustments
+
+    def __repr__(self):
+        return "Data:\n {data}\n\nAdjustments:\n{adjustments}".format(
+            data=repr(asarray(self._data)),
+            adjustments=pformat(self.adjustments),
+        )
 
     property dtype:
         def __get__(self):
