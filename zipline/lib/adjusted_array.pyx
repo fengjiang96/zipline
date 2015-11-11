@@ -131,9 +131,12 @@ cdef class Float64AdjustedArray(AdjustedArray):
         self.adjustments = adjustments
 
     def __repr__(self):
-        return "Data:\n {data}\n\nAdjustments:\n{adjustments}".format(
-            data=repr(asarray(self._data)),
-            adjustments=pformat(self.adjustments),
+        return (
+            "Adjusted Array:\n\nData:\n "
+            "{data}\n\nAdjustments:\n{adjustments}".format(
+                data=repr(asarray(self._data)),
+                adjustments=pformat(self.adjustments),
+            )
         )
 
     property dtype:
@@ -225,9 +228,16 @@ cdef class _Float64AdjustedArrayWindow:
         return out
 
     def __repr__(self):
-        return "%s(window_length=%d, anchor=%d, max_anchor=%d)" % (
-            type(self).__name__,
-            self.window_length,
-            self.anchor,
-            self.max_anchor,
+        return (
+            "{type_}\n"
+            "Window Length: {window_length}\n"
+            "Current Buffer:\n"
+            "{data}\n"
+            "Remaining Adjustments:\n"
+            "{adjustments}"
+        ).format(
+            type_=type(self).__name__,
+            window_length=self.window_length,
+            data=asarray(self.data[self.anchor - self.window_length:self.anchor]),
+            adjustments=pformat(self.adjustments),
         )
